@@ -1,0 +1,52 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>apps.json — a decentralized standard for vibe-coded apps</title>
+  <meta name="description" content="Drop a file at yourdomain.com/apps.json. Anyone can discover, follow, and fork your apps. No registry, no submission, no central authority." />
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+  <link rel="stylesheet" href="/styles.css" />
+  <meta property="og:title" content="apps.json" />
+  <meta property="og:description" content="A decentralized standard for publishing apps. RSS for vibe-coded micro-apps." />
+  <meta property="og:type" content="website" />
+</head>
+<body>
+  <header>
+    <h1>apps.json</h1>
+    <p class="muted">A lightweight, decentralized standard for publishing the apps you make. Drop a file at <code>yourdomain.com/apps.json</code> and let anyone discover, follow, and fork what you ship.</p>
+  </header>
+
+  <hr class="rule" />
+
+  <section>
+    <h2>Why this exists</h2>
+    <p>Vibe-coded micro-apps are the new long tail. There's no good way to follow a builder's output as a set &mdash; Twitter posts disappear, app stores gatekeep, central directories centralize. <code>apps.json</code> is RSS for apps: one file at a well-known URL, anyone can read, no registry required.</p>
+  </section>
+
+  <section>
+    <h2>The minimum viable feed</h2>
+    <pre class="mono"><code>{
+  "version": "1.0",
+  "apps": [
+    { "name": "My Cool App", "url": "https://example.com/cool" }
+  ]
+}</code></pre>
+    <p class="muted">Required fields are deliberately tiny. Everything else (id, description, version, targets, author, provenance, forkability) is optional.</p>
+  </section>
+
+  <section class="placeholder">
+    <h2>Status</h2>
+    <p>Spec is <strong>v1.0 (draft)</strong>. The reader, CLI, and seeded directory are landing this week. In the meantime:</p>
+    <ul>
+      <li>Read the spec: <a href="/spec">/spec</a> <span class="muted">(coming soon)</span></li>
+      <li>Validator CLI: <code>npx appfeed validate &lt;url&gt;</code> <span class="muted">(shipping)</span></li>
+      <li>Source: <a href="https://github.com/briandell/apps-json">github.com/briandell/apps-json</a> <span class="muted">(soon)</span></li>
+    </ul>
+  </section>
+
+  <footer>
+    <p><code>apps.json</code> v1.0 &middot; published from <code>github.com/briandell/apps-json</code> &middot; rendered by Vercel.</p>
+  </footer>
+</body>
+</html>

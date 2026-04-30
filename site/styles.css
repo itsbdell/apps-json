@@ -1,0 +1,68 @@
+/* apps.json — site styles
+   Single stylesheet shared across reader, directory, and badge generator.
+   Kept intentionally small and unopinionated; tune as visual identity emerges. */
+
+:root {
+  --bg: #f7f5ef;
+  --ink: #0b0b0c;
+  --muted: #6b6963;
+  --rule: #d9d4c7;
+  --accent: #b85c38;
+  --ok: #2f7a4a;
+  --warn: #b58300;
+  --err: #b8312b;
+  --radius: 10px;
+  --max-width: 760px;
+}
+
+* { box-sizing: border-box; }
+
+html, body {
+  margin: 0;
+  padding: 0;
+  background: var(--bg);
+  color: var(--ink);
+  font-family: ui-serif, Georgia, "Iowan Old Style", "Apple Garamond", serif;
+  font-size: 17px;
+  line-height: 1.55;
+}
+
+body {
+  max-width: var(--max-width);
+  margin: 0 auto;
+  padding: 4rem 1.5rem 6rem;
+}
+
+a { color: var(--accent); text-decoration: underline; text-underline-offset: 3px; }
+a:hover { text-decoration-thickness: 2px; }
+
+h1, h2, h3 { font-weight: 700; line-height: 1.2; margin: 0 0 0.5rem; }
+h1 { font-size: 2.4rem; letter-spacing: -0.01em; }
+h2 { font-size: 1.4rem; margin-top: 2rem; }
+h3 { font-size: 1.05rem; margin-top: 1.5rem; }
+
+code, pre, .mono {
+  font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  font-size: 0.92em;
+}
+
+.muted { color: var(--muted); }
+.rule { border: 0; border-top: 1px solid var(--rule); margin: 2rem 0; }
+
+/* Coming-soon placeholder (will be replaced when reader/directory ships) */
+.placeholder {
+  margin-top: 3rem;
+}
+.placeholder code {
+  background: #ece7da;
+  padding: 0.1em 0.4em;
+  border-radius: 4px;
+}
+
+footer {
+  margin-top: 4rem;
+  padding-top: 1.5rem;
+  border-top: 1px solid var(--rule);
+  color: var(--muted);
+  font-size: 0.9rem;
+}
