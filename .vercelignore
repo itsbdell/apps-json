@@ -1,0 +1,8 @@
+appfeed/
+seeding/
+docs/
+spec/
+.github/
+LICENSE
+README.md
+.gitignore

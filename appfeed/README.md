@@ -5,18 +5,22 @@ feeds. This is the reference implementation for the [apps.json spec](../spec/SPE
 
 ## Status
 
-**Scaffold only.** This document defines the CLI's surface area and the
-implementation skeleton. The working code does not yet exist — see
-[Implementation plan](#implementation-plan) below.
+**v0.1 — `validate` shipped.** The other commands (`fetch`, `follow`,
+`list`, `update`) are scaffolded but unimplemented and will print a
+"coming soon" message.
 
-## Install (planned)
+Note: the npm name `appfeed` is taken by an unrelated package (a 2014
+deployment tool from substack). This package publishes as
+**`@apps-json/cli`** but installs the binary as `appfeed`.
+
+## Install
 
 ```bash
 # zero-install
-npx appfeed validate https://briandell.com/apps.json
+npx @apps-json/cli validate https://briandell.com/apps.json
 
 # global install
-npm install -g appfeed
+npm install -g @apps-json/cli
 appfeed --help
 ```
 
