@@ -5,7 +5,7 @@
   "homepage": "https://apps-json.org",
   "repository": {
     "type": "git",
-    "url": "https://github.com/briandell/apps-json.git",
+    "url": "https://github.com/itsbdell/apps-json.git",
     "directory": "appfeed"
   },
   "license": "MIT",
