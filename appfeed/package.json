@@ -22,8 +22,8 @@
     "README.md"
   ],
   "scripts": {
-    "sync-schema": "cp ../spec/apps.schema.json src/schema.json",
-    "prepublishOnly": "npm run sync-schema",
+    "sync-schemas": "node ../scripts/sync-schemas.js",
+    "prepublishOnly": "npm run sync-schemas",
     "test": "node --test test/"
   },
   "keywords": [
