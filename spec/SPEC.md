@@ -104,11 +104,11 @@ For binary downloads, `checksum` is recommended (e.g., `"sha256:abc123..."`).
 
 ```json
 {
-  "name": "Brian Dell",
-  "url": "https://briandell.com",
+  "name": "Ada Lovelace",
+  "url": "https://ada.example",
   "social": [
-    { "platform": "github", "url": "https://github.com/itsbdell" },
-    { "platform": "twitter", "url": "https://twitter.com/briandell" }
+    { "platform": "github", "url": "https://github.com/ada-example" },
+    { "platform": "mastodon", "url": "https://mastodon.example/@ada" }
   ]
 }
 ```

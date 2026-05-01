@@ -402,7 +402,7 @@ render either a clean profile page or actionable error messages.
 
 **Verification:**
 - Loading the live site with `?feed=<URL of spec/apps.example.json on Vercel>`
-  renders Brian Dell's profile with Smaug, Outreach, and the fork.
+  renders the example author's profile with the example apps.
 - Loading with a deliberately broken feed shows useful errors, not a
   blank page.
 
@@ -464,7 +464,7 @@ publishers can lint feeds locally before publishing.
 **Verification:**
 - `node bin/appfeed.js validate ../spec/apps.example.json` prints
   success.
-- `node bin/appfeed.js validate https://briandell.com/apps.json`
+- `node bin/appfeed.js validate https://briandell.xyz/apps.json`
   works once Brian's feed exists (U6).
 - `node --test test/` passes.
 
@@ -559,7 +559,7 @@ site footer or README.
 - Plain DOM, no framework.
 
 **Test scenarios:**
-- *Happy path.* Input `https://briandell.com/apps.json` produces a
+- *Happy path.* Input `https://ada.example/apps.json` produces a
   snippet whose `href` contains exactly that URL, URL-encoded.
 - *Happy path.* The static-SVG snippet is a single `<img>` tag and
   contains no `<a>`.

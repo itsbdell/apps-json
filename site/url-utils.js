@@ -3,10 +3,10 @@
 // no DOM access.
 
 // Normalize a feed URL the user typed (or pasted into ?feed=). Accepts:
-//   - "briandell.com"             -> "https://briandell.com/apps.json"
-//   - "https://briandell.com"     -> "https://briandell.com/apps.json"
-//   - "https://briandell.com/apps.json"  -> unchanged
-//   - "https://briandell.com/feeds/apps.json"  -> unchanged (custom path preserved)
+//   - "ada.example"             -> "https://ada.example/apps.json"
+//   - "https://ada.example"     -> "https://ada.example/apps.json"
+//   - "https://ada.example/apps.json"  -> unchanged
+//   - "https://ada.example/feeds/apps.json"  -> unchanged (custom path preserved)
 // Returns null when the input cannot be coerced into a valid http(s) URL.
 export function normalizeFeedUrl(raw) {
   let s = (raw || "").trim();

@@ -16,26 +16,26 @@ test("happy path: minimal valid feed", () => {
   assert.equal(r.errors.length, 0);
 });
 
-test("happy path: full example feed (smaug + outreach + fork)", () => {
+test("happy path: full example feed with optional fields", () => {
   const r = validate({
     version: "1.0",
-    self: "https://briandell.com/apps.json",
+    self: "https://ada.example/apps.json",
     updated: "2026-04-30T12:00:00Z",
     author: {
-      name: "Brian Dell",
-      url: "https://briandell.com",
+      name: "Ada Lovelace",
+      url: "https://ada.example",
       social: [
-        { platform: "github", url: "https://github.com/itsbdell" }
+        { platform: "github", url: "https://github.com/ada-example" }
       ]
     },
     apps: [
       {
-        id: "smaug", name: "Smaug", url: "https://smaug.briandell.com",
+        id: "notebook", name: "Notebook", url: "https://notebook.ada.example",
         version: "0.4.2", vibe_coded: true, forkable: true,
-        source: "https://github.com/itsbdell/smaug",
+        source: "https://github.com/ada-example/notebook",
         targets: [
-          { kind: "web", url: "https://smaug.briandell.com" },
-          { kind: "macos", url: "https://briandell.com/smaug/Smaug.dmg" }
+          { kind: "web", url: "https://notebook.ada.example" },
+          { kind: "macos", url: "https://ada.example/downloads/Notebook.dmg" }
         ]
       }
     ]

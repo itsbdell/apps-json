@@ -1,44 +1,42 @@
 {
   "version": "1.0",
-  "self": "https://briandell.com/apps.json",
+  "self": "https://ada.example/apps.json",
   "updated": "2026-04-30T12:00:00Z",
   "author": {
-    "name": "Brian Dell",
-    "url": "https://briandell.com",
+    "name": "Ada Lovelace",
+    "url": "https://ada.example",
     "social": [
-      { "platform": "github", "url": "https://github.com/itsbdell", "handle": "itsbdell" },
-      { "platform": "twitter", "url": "https://twitter.com/briandell", "handle": "@briandell" }
+      { "platform": "github", "url": "https://github.com/ada-example", "handle": "ada-example" },
+      { "platform": "mastodon", "url": "https://mastodon.example/@ada", "handle": "@ada@mastodon.example" }
     ]
   },
   "apps": [
     {
-      "id": "smaug",
-      "name": "Smaug",
-      "description": "Personal bookmarks vault with AI synthesis.",
-      "url": "https://smaug.briandell.com",
+      "id": "notebook",
+      "name": "Notebook",
+      "description": "A web-based notebook for jotting and threading ideas.",
+      "url": "https://notebook.ada.example",
       "version": "0.4.2",
       "updated": "2026-04-22T09:14:00Z",
-      "tags": ["bookmarks", "vault", "ai"],
+      "tags": ["notes", "writing", "ai"],
       "vibe_coded": true,
-      "prompt_log": "https://briandell.com/smaug/prompts",
       "forkable": true,
-      "source": "https://github.com/itsbdell/smaug",
+      "source": "https://github.com/ada-example/notebook",
       "targets": [
-        { "kind": "web", "url": "https://smaug.briandell.com", "label": "Open in browser" },
-        { "kind": "macos", "url": "https://briandell.com/smaug/Smaug.dmg", "label": "Install on Mac" }
+        { "kind": "web", "url": "https://notebook.ada.example", "label": "Open in browser" }
       ]
     },
     {
       "id": "outreach",
       "name": "Outreach",
       "description": "Topic-driven networking pipeline as a Claude skill.",
-      "url": "https://briandell.com/skills/outreach",
+      "url": "https://ada.example/skills/outreach",
       "vibe_coded": true,
       "targets": [
         {
           "kind": "claude-skill",
-          "url": "https://briandell.com/skills/outreach.zip",
-          "label": "Install in Claude Code"
+          "url": "https://ada.example/skills/outreach.zip",
+          "label": "Install Claude skill"
         }
       ]
     },
@@ -46,10 +44,10 @@
       "id": "phrase-chain-fork",
       "name": "Phrase Chain — Spanish edition",
       "description": "Fork of phrase-chain retrained on Spanish corpora.",
-      "url": "https://briandell.com/phrase-chain-es",
+      "url": "https://ada.example/phrase-chain-es",
       "vibe_coded": true,
       "forkable": true,
-      "replaces": "app://someone-else.com/phrase-chain"
+      "replaces": "app://upstream.example/phrase-chain"
     }
   ]
 }
