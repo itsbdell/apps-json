@@ -20,22 +20,30 @@ async function getValidator() {
   return cachedValidator;
 }
 
+const FETCH_TIMEOUT_MS = 15000;
+
 async function load(urlOrPath) {
   if (/^https?:\/\//i.test(urlOrPath)) {
     let res;
     try {
       res = await fetch(urlOrPath, {
         headers: { "User-Agent": "appfeed/0.1 (+https://apps-json.org)" },
-        redirect: "follow"
+        redirect: "follow",
+        signal: AbortSignal.timeout(FETCH_TIMEOUT_MS)
       });
     } catch (e) {
-      const err = new Error(`Network error fetching ${urlOrPath}: ${e.message}`);
-      err.kind = "network";
+      const isTimeout = e?.name === "TimeoutError" || e?.name === "AbortError";
+      const err = new Error(
+        isTimeout
+          ? `Timed out after ${FETCH_TIMEOUT_MS}ms fetching ${urlOrPath}`
+          : `Network error fetching ${urlOrPath}: ${e.message}`
+      );
+      err.kind = isTimeout ? "timeout" : "network";
       throw err;
     }
     if (!res.ok) {
       const err = new Error(`HTTP ${res.status} ${res.statusText} from ${urlOrPath}`);
-      err.kind = "network";
+      err.kind = "http";
       err.status = res.status;
       throw err;
     }
@@ -54,7 +62,7 @@ async function load(urlOrPath) {
     text = await readFile(urlOrPath, "utf8");
   } catch (e) {
     const err = new Error(`Could not read ${urlOrPath}: ${e.message}`);
-    err.kind = "network";
+    err.kind = "fs";
     throw err;
   }
   try {

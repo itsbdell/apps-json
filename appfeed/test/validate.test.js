@@ -15,7 +15,7 @@ const EXAMPLE = join(__dirname, "..", "..", "spec", "apps.example.json");
 
 async function run(args) {
   try {
-    const { stdout, stderr } = await exec("node", [BIN, ...args], { encoding: "utf8" });
+    const { stdout, stderr } = await exec(process.execPath, [BIN, ...args], { encoding: "utf8" });
     return { code: 0, stdout, stderr };
   } catch (e) {
     return { code: e.code ?? 1, stdout: e.stdout ?? "", stderr: e.stderr ?? "" };
@@ -165,8 +165,30 @@ test("error path: HTTP 404 exits 2", async () => {
   }
 });
 
-test("stub commands: 'follow' prints coming-soon message and exits non-zero", async () => {
-  const { code, stderr } = await run(["follow", "https://example.com"]);
-  assert.notEqual(code, 0);
-  assert.match(stderr, /coming/i);
+test("stub commands: each prints coming-soon message and exits 64 (EX_USAGE)", async () => {
+  for (const stub of ["fetch", "follow", "list", "update"]) {
+    const { code, stderr } = await run([stub, "https://example.com"]);
+    assert.equal(code, 64, `${stub} should exit 64 (EX_USAGE), got ${code}`);
+    assert.match(stderr, /coming/i, `${stub} should mention 'coming'`);
+  }
+});
+
+test("error path: --json on nonexistent file emits kind:'fs'", async () => {
+  const { code, stdout } = await run(["validate", "/no/such/file.json", "--json"]);
+  assert.equal(code, 2);
+  const parsed = JSON.parse(stdout);
+  assert.equal(parsed.ok, false);
+  assert.equal(parsed.kind, "fs");
+});
+
+test("error path: --json on broken JSON emits kind:'parse'", async () => {
+  const { code, stdout } = await run([
+    "validate",
+    join(FIXTURES, "broken.json"),
+    "--json"
+  ]);
+  assert.equal(code, 2);
+  const parsed = JSON.parse(stdout);
+  assert.equal(parsed.ok, false);
+  assert.equal(parsed.kind, "parse");
 });
