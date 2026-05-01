@@ -5,6 +5,9 @@
 
 import { validate } from "/validator.js";
 import { renderProfile, renderError, renderSchemaErrors, safeWebUrl } from "/render.js";
+import { normalizeFeedUrl, wellKnownFallback } from "/url-utils.js";
+
+const FETCH_TIMEOUT_MS = 15000;
 
 const params = new URLSearchParams(location.search);
 const rawFeed = params.get("feed");
@@ -25,36 +28,23 @@ if (rawFeed) {
   }
 }
 
-function normalizeFeedUrl(raw) {
-  let s = (raw || "").trim();
-  if (!s) return null;
-  // accept bare hosts ("briandell.com") and missing schemes
-  if (!/^https?:\/\//i.test(s)) {
-    s = "https://" + s.replace(/^\/+/, "");
-  }
-  // bare host or trailing slash → append /apps.json
-  try {
-    const u = new URL(s);
-    if (u.pathname === "" || u.pathname === "/") {
-      u.pathname = "/apps.json";
-    }
-    return u.toString();
-  } catch {
-    return null;
-  }
-}
-
 async function fetchJson(url) {
   let res;
   try {
-    res = await fetch(url, { redirect: "follow" });
+    res = await fetch(url, {
+      redirect: "follow",
+      signal: AbortSignal.timeout(FETCH_TIMEOUT_MS)
+    });
   } catch (e) {
-    const isLikelyCors = /Failed to fetch|NetworkError|TypeError/i.test(e?.message || "");
+    const isTimeout = e?.name === "TimeoutError" || e?.name === "AbortError";
+    const isLikelyCors = !isTimeout && /Failed to fetch|NetworkError|TypeError/i.test(e?.message || "");
     return {
       ok: false,
-      kind: "network",
+      kind: isTimeout ? "timeout" : "network",
       url,
-      message: e?.message || "fetch failed",
+      message: isTimeout
+        ? `Timed out after ${FETCH_TIMEOUT_MS}ms`
+        : (e?.message || "fetch failed"),
       hint: isLikelyCors
         ? "The publisher's server may not be sending Access-Control-Allow-Origin. They need to add the header (e.g. on Cloudflare Pages, GitHub Pages, or via Vercel) for browser readers to fetch their feed."
         : null
@@ -90,14 +80,25 @@ async function runReader(rawFeed, output) {
 
   setStatus(output, `Loading ${url}…`);
 
-  let result = await fetchJson(url);
+  const primary = await fetchJson(url);
+  let result = primary;
 
   // Fallback: 404 on /apps.json → try /.well-known/apps.json
-  if (!result.ok && result.kind === "http" && result.status === 404 && /\/apps\.json$/.test(url)) {
-    const fallback = url.replace(/\/apps\.json$/, "/.well-known/apps.json");
-    setStatus(output, `Trying ${fallback}…`);
-    const second = await fetchJson(fallback);
-    if (second.ok) result = second;
+  if (!result.ok && result.kind === "http" && result.status === 404) {
+    const fallback = wellKnownFallback(url);
+    if (fallback) {
+      setStatus(output, `Trying ${fallback}…`);
+      const second = await fetchJson(fallback);
+      if (second.ok) {
+        result = second;
+      } else {
+        // Both failed — surface the original 404 with a note that fallback was attempted
+        result = {
+          ...primary,
+          message: `${primary.message} (also tried ${fallback}: ${second.kind === "http" ? `HTTP ${second.status}` : second.message})`
+        };
+      }
+    }
   }
 
   if (!result.ok) {
