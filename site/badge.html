@@ -1,0 +1,75 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>apps.json — badge generator</title>
+  <meta name="description" content="Generate a paste-ready badge snippet for your apps.json feed." />
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+  <link rel="stylesheet" href="/styles.css" />
+</head>
+<body>
+  <nav class="site-nav">
+    <a href="/" class="site-brand"><span aria-hidden="true">{ }</span> <strong>apps.json</strong></a>
+    <span class="site-nav-sep">·</span>
+    <a href="https://github.com/itsbdell/apps-json">github</a>
+    <span class="site-nav-sep">·</span>
+    <a href="/badge">badge</a>
+  </nav>
+
+  <main>
+    <header>
+      <h1>Badge generator</h1>
+      <p class="muted">Drop a paste-ready snippet on your site footer, README, or anywhere you want to advertise an <code>apps.json</code> feed.</p>
+    </header>
+
+    <section class="badge-form">
+      <label for="feed-input"><strong>Your feed URL</strong></label>
+      <input id="feed-input" type="url"
+             placeholder="https://yourdomain.com/apps.json"
+             autocomplete="url"
+             spellcheck="false" />
+      <p id="feed-status" class="muted feed-status" aria-live="polite"></p>
+    </section>
+
+    <section class="badge-previews" hidden id="previews">
+      <h2>Preview</h2>
+      <div class="preview-row" id="preview-link"></div>
+      <p class="muted preview-caption">Clicking the badge opens the reader, which re-validates the feed every time.</p>
+
+      <h3>Snippet — live link (recommended)</h3>
+      <p class="muted">Clicking the badge re-validates the feed in real time. If the feed breaks, the badge will say so.</p>
+      <div class="snippet-row">
+        <textarea id="snippet-link" readonly rows="2" spellcheck="false"></textarea>
+        <button type="button" class="copy-btn" data-target="snippet-link">Copy</button>
+      </div>
+
+      <h3>Snippet — static SVG only</h3>
+      <p class="muted">Cheaper for the publisher (no runtime check). The badge always renders, even if the feed breaks.</p>
+      <div class="snippet-row">
+        <textarea id="snippet-static" readonly rows="2" spellcheck="false"></textarea>
+        <button type="button" class="copy-btn" data-target="snippet-static">Copy</button>
+      </div>
+
+      <h3>Markdown</h3>
+      <p class="muted">For READMEs.</p>
+      <div class="snippet-row">
+        <textarea id="snippet-md" readonly rows="2" spellcheck="false"></textarea>
+        <button type="button" class="copy-btn" data-target="snippet-md">Copy</button>
+      </div>
+    </section>
+
+    <section class="placeholder">
+      <h2>About the badge</h2>
+      <p>The static SVG lives at <a href="/badge.svg"><code>/badge.svg</code></a>. The live link points to <code>/?feed=&lt;your-url&gt;</code>, which fetches and validates the feed on every click and renders the result as a profile page.</p>
+      <p class="muted">Both forms are intentionally minimal — no tracking, no telemetry, no third-party services.</p>
+    </section>
+  </main>
+
+  <footer>
+    <p><code>apps.json</code> v1.0 &middot; <a href="/">home</a> &middot; <a href="https://github.com/itsbdell/apps-json">github.com/itsbdell/apps-json</a></p>
+  </footer>
+
+  <script type="module" src="/badge.js"></script>
+</body>
+</html>
