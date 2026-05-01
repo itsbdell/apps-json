@@ -6,7 +6,7 @@
     "name": "Brian Dell",
     "url": "https://briandell.com",
     "social": [
-      { "platform": "github", "url": "https://github.com/briandell", "handle": "briandell" },
+      { "platform": "github", "url": "https://github.com/itsbdell", "handle": "itsbdell" },
       { "platform": "twitter", "url": "https://twitter.com/briandell", "handle": "@briandell" }
     ]
   },
@@ -22,7 +22,7 @@
       "vibe_coded": true,
       "prompt_log": "https://briandell.com/smaug/prompts",
       "forkable": true,
-      "source": "https://github.com/briandell/smaug",
+      "source": "https://github.com/itsbdell/smaug",
       "targets": [
         { "kind": "web", "url": "https://smaug.briandell.com", "label": "Open in browser" },
         { "kind": "macos", "url": "https://briandell.com/smaug/Smaug.dmg", "label": "Install on Mac" }

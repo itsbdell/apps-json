@@ -107,7 +107,7 @@ For binary downloads, `checksum` is recommended (e.g., `"sha256:abc123..."`).
   "name": "Brian Dell",
   "url": "https://briandell.com",
   "social": [
-    { "platform": "github", "url": "https://github.com/briandell" },
+    { "platform": "github", "url": "https://github.com/itsbdell" },
     { "platform": "twitter", "url": "https://twitter.com/briandell" }
   ]
 }
