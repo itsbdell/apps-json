@@ -1,9 +1,9 @@
 /* apps.json — site styles
-   Single stylesheet shared across reader, directory, and badge generator.
-   Kept intentionally small and unopinionated; tune as visual identity emerges. */
+   Single stylesheet shared across reader, directory, and badge generator. */
 
 :root {
   --bg: #f7f5ef;
+  --bg-soft: #ece7da;
   --ink: #0b0b0c;
   --muted: #6b6963;
   --rule: #d9d4c7;
@@ -30,7 +30,7 @@ html, body {
 body {
   max-width: var(--max-width);
   margin: 0 auto;
-  padding: 4rem 1.5rem 6rem;
+  padding: 1.5rem 1.5rem 6rem;
 }
 
 a { color: var(--accent); text-decoration: underline; text-underline-offset: 3px; }
@@ -49,15 +49,170 @@ code, pre, .mono {
 .muted { color: var(--muted); }
 .rule { border: 0; border-top: 1px solid var(--rule); margin: 2rem 0; }
 
-/* Coming-soon placeholder (will be replaced when reader/directory ships) */
-.placeholder {
-  margin-top: 3rem;
+/* Site nav (always visible) */
+.site-nav {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  align-items: baseline;
+  font-size: 0.95rem;
+  margin-bottom: 2rem;
 }
-.placeholder code {
-  background: #ece7da;
-  padding: 0.1em 0.4em;
-  border-radius: 4px;
+.site-brand { text-decoration: none; color: var(--ink); }
+.site-brand strong { font-weight: 700; }
+.site-nav-sep { color: var(--muted); }
+
+/* Try-the-reader form */
+.try-form {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  align-items: center;
+  margin-top: 0.5rem;
 }
+.try-form input[type="url"] {
+  flex: 1 1 320px;
+  padding: 0.5rem 0.6rem;
+  font-family: inherit;
+  font-size: 0.95rem;
+  border: 1px solid var(--rule);
+  border-radius: 6px;
+  background: white;
+}
+.try-form button {
+  padding: 0.5rem 0.9rem;
+  font-family: inherit;
+  font-size: 0.95rem;
+  border: 1px solid var(--ink);
+  background: var(--ink);
+  color: var(--bg);
+  border-radius: 6px;
+  cursor: pointer;
+}
+.try-form button:hover { background: var(--accent); border-color: var(--accent); }
+
+/* Coming-soon placeholder */
+.placeholder code { background: var(--bg-soft); padding: 0.1em 0.4em; border-radius: 4px; }
+
+/* ----- Reader output ----- */
+
+#reader-output { padding-top: 1rem; }
+
+.profile { display: flex; flex-direction: column; gap: 1.5rem; }
+
+.author-block { display: flex; flex-direction: column; gap: 0.6rem; }
+.author-block h1 { font-size: 2.4rem; margin: 0; }
+.author-block h1 a { text-decoration: none; color: var(--ink); border-bottom: 2px solid transparent; }
+.author-block h1 a:hover { border-color: var(--accent); }
+
+.social-chips {
+  list-style: none; padding: 0; margin: 0;
+  display: flex; flex-wrap: wrap; gap: 0.4rem;
+}
+.chip {
+  display: inline-flex; align-items: center; gap: 0.35em;
+  padding: 0.18em 0.65em;
+  background: var(--bg-soft);
+  border-radius: 999px;
+  font-size: 0.85rem;
+  text-decoration: none;
+  color: var(--ink);
+}
+.chip:hover { background: var(--ink); color: var(--bg); }
+.chip-platform { color: var(--muted); }
+.chip:hover .chip-platform { color: var(--bg-soft); }
+.chip-handle { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; }
+
+.chip-vibe { background: #f5e6dd; color: #5b2a14; }
+.chip-fork { background: #e3ecdf; color: #2f4a2c; }
+
+/* ----- App list ----- */
+
+.app-list { display: flex; flex-direction: column; gap: 1.25rem; }
+
+.app-card {
+  border: 1px solid var(--rule);
+  border-radius: var(--radius);
+  background: white;
+  padding: 1.1rem 1.2rem 1.0rem;
+  display: flex; flex-direction: column; gap: 0.55rem;
+}
+
+.app-head {
+  display: flex; flex-wrap: wrap; align-items: baseline; gap: 0.6rem;
+  justify-content: space-between;
+}
+.app-name { font-size: 1.25rem; margin: 0; }
+.app-meta { display: flex; gap: 0.5rem; font-size: 0.85rem; }
+.app-meta .ver {
+  font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  background: var(--bg-soft); padding: 0.1em 0.4em; border-radius: 4px;
+}
+
+.app-desc { margin: 0; }
+
+.tag-row { list-style: none; padding: 0; margin: 0; display: flex; flex-wrap: wrap; gap: 0.3rem; }
+.tag {
+  font-size: 0.78rem; padding: 0.05em 0.5em;
+  background: var(--bg-soft); border-radius: 999px; color: var(--muted);
+}
+
+.target-row { display: flex; flex-wrap: wrap; gap: 0.4rem; }
+.target-btn {
+  display: inline-flex; flex-direction: column; align-items: flex-start;
+  padding: 0.45rem 0.7rem;
+  background: var(--ink); color: var(--bg);
+  border: 1px solid var(--ink); border-radius: 6px;
+  text-decoration: none; cursor: pointer;
+  font-family: inherit; font-size: 0.95rem;
+  line-height: 1.1; gap: 0.1rem;
+}
+.target-btn:hover { background: var(--accent); border-color: var(--accent); }
+.target-label { font-weight: 600; }
+.target-kind { font-size: 0.72rem; opacity: 0.75; font-family: ui-monospace, monospace; }
+
+.prov-row {
+  display: flex; flex-wrap: wrap; gap: 0.4rem; align-items: center;
+  padding-top: 0.4rem; border-top: 1px dashed var(--rule);
+  font-size: 0.85rem;
+}
+.prov-link, .prov-row a { color: var(--muted); text-decoration: none; }
+.prov-row a { border-bottom: 1px dotted var(--muted); }
+.prov-row a:hover { color: var(--ink); border-color: var(--ink); }
+
+.empty { color: var(--muted); font-style: italic; }
+.feed-footer { padding-top: 1rem; border-top: 1px solid var(--rule); font-size: 0.85rem; }
+.feed-footer a { word-break: break-all; }
+
+.loading { padding: 1rem 0; }
+
+/* ----- Error states ----- */
+
+.error-card {
+  border: 1px solid var(--err);
+  border-left-width: 4px;
+  border-radius: var(--radius);
+  background: #fbf3f1;
+  padding: 1rem 1.2rem;
+  display: flex; flex-direction: column; gap: 0.5rem;
+}
+.error-title { color: var(--err); margin: 0; font-size: 1.1rem; }
+.error-message { margin: 0; }
+.error-url code { background: white; padding: 0.1em 0.4em; border-radius: 3px; word-break: break-all; }
+.error-hint { background: white; padding: 0.6rem 0.8rem; border-radius: 6px; border: 1px solid var(--rule); }
+.error-hint h3 { margin: 0 0 0.25rem; font-size: 0.95rem; }
+.error-hint p { margin: 0; font-size: 0.95rem; }
+.error-diag code { background: white; padding: 0.1em 0.4em; border-radius: 3px; word-break: break-all; }
+
+.error-list { margin: 0; padding-left: 1.2rem; }
+.error-list li { margin: 0.15rem 0; font-size: 0.92rem; }
+.error-path { background: white; padding: 0.05em 0.3em; border-radius: 3px; font-size: 0.85em; }
+
+.warning-block { margin-top: 0.5rem; }
+.warning-block summary { cursor: pointer; color: var(--warn); font-size: 0.9rem; }
+.warning-path { background: white; padding: 0.05em 0.3em; border-radius: 3px; font-size: 0.85em; color: var(--warn); }
+
+/* ----- Footer ----- */
 
 footer {
   margin-top: 4rem;
