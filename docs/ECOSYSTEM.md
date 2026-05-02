@@ -31,11 +31,12 @@ Reader and aggregator surfaces, in rough order of how much work they take:
 
 - **A web reader at `apps-json.org/?feed=<url>`** that fetches any
   `apps.json` and renders it as a profile page. The "view source" of the
-  format.
+  format. *(Shipped, currently at apps-json.vercel.app.)*
 - **A validator badge** that authors paste into their site footer:
   `<a href="https://apps-json.org/?feed=mysite.com/apps.json">apps.json ✓</a>`.
+  *(Shipped — generator at `/badge.html`.)*
 - **A directory page** with curated `apps.json` URLs. Manual at first; a
-  crawler later.
+  crawler later. *(Pending — needs the seed list.)*
 
 ### Tier 2 — exists in a month
 
@@ -143,7 +144,7 @@ A path from zero to network effect:
    shared platform.
 3. **Someone builds the first reader at apps-json.org.** Friction:
    weekend project. Reward: instant URL to share whenever they show off
-   what they make.
+   what they make. *(Done — apps-json.vercel.app, weekend of 2026-04-30.)*
 4. **A vibe-coding platform exposes per-user feeds.** Friction: one
    server-side endpoint. Reward: every published user becomes a
    publisher of structured metadata, which platforms have wanted but

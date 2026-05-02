@@ -14,7 +14,8 @@ follow, and fork what you ship.
 | [`spec/SPEC.md`](spec/SPEC.md) | Human-readable spec (v1.0). |
 | [`spec/apps.schema.json`](spec/apps.schema.json) | JSON Schema (Draft 2020-12). |
 | [`spec/apps.example.json`](spec/apps.example.json) | A complete example feed. |
-| [`appfeed/README.md`](appfeed/README.md) | Reference CLI scaffold. |
+| [`appfeed/`](appfeed/) | Reference CLI (v0.1 — `validate` shipped). Publishes as `@apps-json/cli`. |
+| [`site/`](site/) | The web reader, badge generator, and shared validator. |
 | [`docs/ECOSYSTEM.md`](docs/ECOSYSTEM.md) | Map of readers, discovery, adopters. |
 | [`docs/brainstorms/2026-04-30-apps-json-requirements.md`](docs/brainstorms/2026-04-30-apps-json-requirements.md) | Requirements doc and weekend-ship plan. |
 
@@ -35,14 +36,24 @@ provenance, forkability) is optional.
 
 ## Smallest weekend shipment
 
-A web reader at `apps-json.org/?feed=<url>` that fetches and renders any
-`apps.json` as a profile page, plus a seeded directory of ~20 hand-curated
-feeds, plus a 100-line `npx appfeed validate` script. See the
-[requirements doc](docs/brainstorms/2026-04-30-apps-json-requirements.md#smallest-viable-shipment)
+A web reader at `?feed=<url>` that fetches and renders any `apps.json`
+as a profile page, a paste-ready badge generator, and an `npx
+@apps-json/cli validate` script. See the [requirements
+doc](docs/brainstorms/2026-04-30-apps-json-requirements.md#smallest-viable-shipment)
 for why this is the right starting bundle.
 
 ## Status
 
-This is a **brainstorm artifact**, not a shipped product. The spec, the
-example, the ecosystem map, and the CLI scaffold are drafted. The reader,
-the published CLI, and the seed directory are next.
+The weekend bundle is **shipped on `feat/weekend-ship`** (PR #1). Live
+preview at [apps-json.vercel.app](https://apps-json.vercel.app). The
+spec, schema, example feed, browser reader, badge generator, and CLI
+v0.1 are all in. Pending: production domain, `npm publish`, seed
+directory.
+
+```bash
+# try the CLI without installing
+npx @apps-json/cli validate <url-or-path>
+
+# try the reader
+open https://apps-json.vercel.app/?feed=<url-of-your-apps.json>
+```
