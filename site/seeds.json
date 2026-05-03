@@ -1,0 +1,15 @@
+{
+  "version": "1.0",
+  "updated": "2026-05-02",
+  "feeds": [
+    {
+      "id": "ada-example",
+      "feed_url": "https://ada.example/apps.json",
+      "fixture": "site/apps.example.json",
+      "demo": true,
+      "permission": "fictional-example",
+      "curator_note": "Fictional demo feed used to show the apps.json directory and digest surfaces.",
+      "tags": ["demo", "ai", "tools"]
+    }
+  ]
+}

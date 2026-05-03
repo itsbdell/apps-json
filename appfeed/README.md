@@ -1,13 +1,14 @@
 # appfeed — reference CLI for apps.json
 
-A small Node.js CLI for validating `apps.json` feeds. Reference
-implementation for the [apps.json spec](../spec/SPEC.md).
+A small Node.js CLI for validating and maintaining `apps.json` feeds.
+Reference implementation for the [apps.json spec](../spec/SPEC.md).
 
 ## Status
 
-**v0.1 — `validate` shipped.** The other commands (`fetch`, `follow`,
-`list`, `update`) are scaffolded but unimplemented; invoking them
-prints a "coming soon" message and exits `64` (`EX_USAGE`).
+The CLI currently implements `validate` and `add`. The other commands
+(`fetch`, `follow`, `list`, `update`) are reserved for a future local-reader
+workflow; invoking them prints a "coming soon" message and exits `64`
+(`EX_USAGE`).
 
 The npm name `appfeed` is taken by an unrelated 2014 package. This
 package publishes as **`@apps-json/cli`** and installs the binary as
@@ -57,6 +58,25 @@ Flags:
 `appfeed fetch | follow | list | update` print a "coming soon" message
 linking to the tracking issue and exit `64`. They will land in a
 future release.
+
+### `appfeed add <path>`
+
+Adds or updates an app entry in a local feed, then validates the result.
+Creates the file if it does not exist.
+
+```bash
+appfeed add ./apps.json \
+  --name "Tiny Tool" \
+  --url "https://example.com/tiny" \
+  --description "A small useful app." \
+  --tags "utility,ai" \
+  --target "web|https://example.com/tiny|Open" \
+  --vibe-coded true \
+  --forkable true \
+  --source "https://github.com/example/tiny"
+```
+
+Use `--replace` to update an existing entry with the same `id` or `url`.
 
 ## Exit codes
 

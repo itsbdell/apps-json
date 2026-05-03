@@ -3,45 +3,49 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>apps.json — a decentralized standard for vibe-coded apps</title>
-  <meta name="description" content="Drop a file at yourdomain.com/apps.json. Anyone can discover, follow, and fork your apps. No registry, no submission, no central authority." />
+  <title>apps.json — a decentralized standard for app feeds</title>
+  <meta name="description" content="A tiny JSON file for publishing, discovering, and syndicating independent apps across the open web." />
   <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-  <link rel="stylesheet" href="/styles.css" />
+  <link rel="stylesheet" href="/styles.css?v=20260502-8" />
   <meta property="og:title" content="apps.json" />
   <meta property="og:description" content="A decentralized standard for publishing apps. RSS for vibe-coded micro-apps." />
   <meta property="og:type" content="website" />
 </head>
 <body>
   <nav class="site-nav">
-    <a href="/" class="site-brand"><span aria-hidden="true">{ }</span> <strong>apps.json</strong></a>
+    <a href="/" class="site-brand"><strong>apps.json</strong></a>
     <span class="site-nav-sep">·</span>
-    <a href="https://github.com/itsbdell/apps-json">github</a>
+    <a href="#about">about</a>
     <span class="site-nav-sep">·</span>
-    <a href="/badge">badge</a>
+    <a href="/digest.html">digest</a>
+    <span class="site-nav-sep">·</span>
+    <a href="/badge.html">badge</a>
+    <span class="site-nav-sep">·</span>
+    <a href="https://github.com/itsbdell/apps-json">open source</a>
   </nav>
 
   <main id="directory-mode">
     <header>
       <h1>apps.json</h1>
-      <p class="muted">A lightweight, decentralized standard for publishing the apps you make. Drop a file at <code>yourdomain.com/apps.json</code> and let anyone discover, follow, and fork what you ship.</p>
+      <p class="muted">A small, decentralized standard for publishing the apps you make. Put a file at <code>yourdomain.com/apps.json</code> and let people discover, follow, render, and fork the set.</p>
     </header>
 
     <hr class="rule" />
 
-    <section>
+    <section id="about">
       <h2>Why this exists</h2>
-      <p>Vibe-coded micro-apps are the new long tail. There's no good way to follow a builder's output as a set &mdash; Twitter posts disappear, app stores gatekeep, central directories centralize. <code>apps.json</code> is RSS for apps: one file at a well-known URL, anyone can read, no registry required.</p>
+      <p>Small apps are starting to behave like posts: frequent, personal, weirdly useful, and scattered everywhere. There is no good way to follow a builder's output as a set &mdash; social posts disappear, app stores gatekeep, central directories centralize. <code>apps.json</code> is RSS for apps: one file at a well-known URL, anyone can read, no registry required.</p>
     </section>
 
     <section>
-      <h2>The minimum viable feed</h2>
+      <h2>The smallest useful feed</h2>
       <pre class="mono"><code>{
   "version": "1.0",
   "apps": [
     { "name": "My Cool App", "url": "https://example.com/cool" }
   ]
 }</code></pre>
-      <p class="muted">Required fields are deliberately tiny. Everything else (id, description, version, targets, author, provenance, forkability) is optional.</p>
+      <p class="muted">Required fields are deliberately tiny. Everything else &mdash; tags, targets, author, provenance, forkability &mdash; is optional creator-declared metadata.</p>
     </section>
 
     <section>
@@ -57,12 +61,17 @@
 
     <section class="placeholder">
       <h2>Status</h2>
-      <p>Spec is <strong>v1.0 (draft)</strong>. The seeded directory is landing this week. In the meantime:</p>
+      <p>Spec is <strong>v1.0 (draft)</strong>. The seeded directory below is generated from public feeds that creators or platforms have published.</p>
       <ul>
-        <li>Read the spec: <a href="/spec">/spec</a> <span class="muted">(coming soon)</span></li>
+        <li>Read the spec: <a href="https://github.com/itsbdell/apps-json/blob/main/spec/SPEC.md">spec/SPEC.md</a></li>
         <li>Validator CLI: <code>npx @apps-json/cli validate &lt;url&gt;</code></li>
+        <li>Digest: <a href="/digest.html">/digest</a> · <a href="/feed.json">JSON Feed</a> · <a href="/feed.xml">RSS</a></li>
         <li>Source: <a href="https://github.com/itsbdell/apps-json">github.com/itsbdell/apps-json</a></li>
       </ul>
+    </section>
+
+    <section id="seed-directory" aria-live="polite">
+      <p class="loading muted">Loading seeded directory…</p>
     </section>
   </main>
 
@@ -72,6 +81,10 @@
     <p><code>apps.json</code> v1.0 &middot; published from <code>github.com/itsbdell/apps-json</code> &middot; rendered by Vercel.</p>
   </footer>
 
-  <script type="module" src="/reader.js"></script>
+  <script type="module" src="/reader.js?v=20260502-8"></script>
+  <script type="module">
+    import { bootDirectory } from "/directory.js?v=20260502-8";
+    if (!new URLSearchParams(location.search).get("feed")) bootDirectory();
+  </script>
 </body>
 </html>

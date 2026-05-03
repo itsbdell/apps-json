@@ -7,6 +7,8 @@
 // which only allows http(s) schemes — javascript:, data:, vbscript:
 // are filtered out.
 
+import { deriveTrustReport, renderTrustReport } from "./trust.js?v=20260502-8";
+
 export function safeWebUrl(s) {
   if (typeof s !== "string" || s.length === 0) return null;
   try {
@@ -90,11 +92,11 @@ function renderAuthor(author) {
 
 function renderTags(tags) {
   if (!Array.isArray(tags) || tags.length === 0) return null;
-  return el("ul", { class: "tag-row" },
+  return renderFactGroup("Tags", "tag-group", el("ul", { class: "tag-row" },
     ...tags
       .filter(t => typeof t === "string" && t.length)
       .map(t => el("li", { class: "tag", text: t }))
-  );
+  ));
 }
 
 function renderTargetButton(t) {
@@ -136,42 +138,50 @@ function renderTargets(app) {
     // Fallback to top-level url as the only target
     const safe = safeWebUrl(app.url);
     if (safe) {
-      return el("div", { class: "target-row" },
+      return renderFactGroup("Targets", "target-group", el("div", { class: "target-row" },
         el("a", { class: "target-btn target-web", href: safe, target: "_blank", rel: "noopener" },
           el("span", { class: "target-label", text: "Open" }),
           el("span", { class: "target-kind", text: "web" })
         )
-      );
+      ));
     }
     return null;
   }
-  return el("div", { class: "target-row" }, ...buttons);
+  return renderFactGroup("Targets", "target-group", el("div", { class: "target-row" }, ...buttons));
 }
 
 function renderProvenance(app) {
   const bits = [];
-  if (app.vibe_coded === true) bits.push(el("span", { class: "chip chip-vibe", text: "vibe-coded" }));
-  if (app.forkable === true) bits.push(el("span", { class: "chip chip-fork", text: "forkable" }));
+  if (app.vibe_coded === true) bits.push(el("span", { class: "chip claim-chip chip-vibe", text: "vibe-coded" }));
+  if (app.forkable === true) bits.push(el("span", { class: "chip claim-chip chip-fork", text: "forkable" }));
   if (safeWebUrl(app.prompt_log)) {
-    bits.push(el("a", { class: "prov-link", href: app.prompt_log, target: "_blank", rel: "noopener", text: "prompt log" }));
+    bits.push(el("a", { class: "chip claim-chip", href: app.prompt_log, target: "_blank", rel: "noopener", text: "prompt log" }));
   }
   if (safeWebUrl(app.source)) {
-    bits.push(el("a", { class: "prov-link", href: app.source, target: "_blank", rel: "noopener", text: "source" }));
+    bits.push(el("a", { class: "chip claim-chip", href: app.source, target: "_blank", rel: "noopener", text: "source" }));
   }
   if (safeWebUrl(app.replaces)) {
-    bits.push(el("span", { class: "prov-link" },
+    bits.push(el("span", { class: "chip claim-chip" },
       "replaces ",
       el("a", { href: app.replaces, target: "_blank", rel: "noopener", text: hostFromUrl(app.replaces) || "upstream" })
     ));
   } else if (typeof app.replaces === "string" && app.replaces.startsWith("app://")) {
     // app:// URI form — render as plain text
-    bits.push(el("span", { class: "prov-link", text: `replaces ${app.replaces}` }));
+    bits.push(el("span", { class: "chip claim-chip", text: `replaces ${app.replaces}` }));
   }
   if (bits.length === 0) return null;
-  return el("div", { class: "prov-row" }, ...bits);
+  return renderFactGroup("Creator claims", "claim-group", el("div", { class: "prov-row" }, ...bits));
 }
 
-function renderApp(app) {
+function renderFactGroup(label, className, content) {
+  if (!content) return null;
+  return el("div", { class: `fact-group ${className}` },
+    el("div", { class: "fact-label", text: label }),
+    content
+  );
+}
+
+function renderApp(app, feed = null) {
   if (!app || typeof app !== "object") return null;
   const name = typeof app.name === "string" ? app.name : "(unnamed)";
   const description = typeof app.description === "string" ? app.description : null;
@@ -191,7 +201,8 @@ function renderApp(app) {
     description ? el("p", { class: "app-desc", text: description }) : null,
     renderTags(app.tags),
     renderTargets(app),
-    renderProvenance(app)
+    renderProvenance(app),
+    renderTrustReport(app.trust || deriveTrustReport({ feed: feed || {}, app }))
   );
 }
 
@@ -207,7 +218,7 @@ export function renderProfile(feed, { sourceUrl } = {}) {
   } else {
     const list = el("div", { class: "app-list" });
     for (const app of apps) {
-      const card = renderApp(app);
+      const card = renderApp(app, feed);
       if (card) list.append(card);
     }
     root.append(list);

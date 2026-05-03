@@ -1,4 +1,4 @@
-# apps.json — Ecosystem Map
+# apps.json -- Ecosystem Map
 
 A guide to what the format enables, what can be built on top, and who would
 adopt it first.
@@ -25,25 +25,24 @@ Once a meaningful number of `apps.json` files exist on the open web, you get:
 
 ## What can be built on top
 
-Reader and aggregator surfaces, in rough order of how much work they take:
-
-### Tier 1 — exists in a weekend
+Reader and aggregator surfaces that become possible once apps are published
+as plain files:
 
 - **A web reader at `apps-json.org/?feed=<url>`** that fetches any
   `apps.json` and renders it as a profile page. The "view source" of the
-  format. *(Shipped, currently at apps-json.vercel.app.)*
+  format. *(Available now at apps-json.vercel.app.)*
 - **A validator badge** that authors paste into their site footer:
   `<a href="https://apps-json.org/?feed=mysite.com/apps.json">apps.json ✓</a>`.
-  *(Shipped — generator at `/badge.html`.)*
+  *(Generator at `/badge.html`.)*
 - **A directory page** with curated `apps.json` URLs. Manual at first; a
-  crawler later. *(Pending — needs the seed list.)*
-
-### Tier 2 — exists in a month
-
-- **A "what shipped this week" digest.** Crawls a few hundred feeds and
-  emails or RSSes the deltas. The compounding loop: people subscribe
-  to find new apps, which gives publishers a reason to keep their feeds
-  fresh.
+  crawler later. The directory is "what exists"; it is generated from a
+  checked-in seed list of public feeds that creators or platforms have
+  published. *(Available as a seeded static surface.)*
+- **A "what changed" digest.** Starts from the seed list and
+  publishes recent additions/updates as a page plus RSS/JSON Feed. A
+  crawler can come later. The compounding loop: people subscribe to find
+  new apps, which gives publishers a reason to keep their feeds fresh.
+  *(Available as a seeded static surface.)*
 - **A search engine across feeds** (think `apps.fyi`). Indexes name,
   description, and tags. Filter by `vibe_coded`, by target kind, by
   forkability.
@@ -53,9 +52,6 @@ Reader and aggregator surfaces, in rough order of how much work they take:
 - **Editor extensions** (VS Code, Cursor) that subscribe to feeds and offer
   one-click install of new skills, MCP servers, or CLIs as their authors
   publish them.
-
-### Tier 3 — exists in a year
-
 - **Family-tree visualizers** that follow `replaces` chains across feeds
   to show app lineages. "This skill descends from these three earlier
   ones, here are the prompt logs that produced each."
@@ -91,8 +87,18 @@ get a badge for their README. The list is the seed for crawlers. This
 deliberately mirrors how the early webring scenes built reach.
 
 What we explicitly do *not* build: a submission form on a central site
-that gates inclusion. The whole point is that publishing IS the
-submission.
+that gates inclusion. The whole point is that publishing a public
+`apps.json` IS the opt-in; the seed list curates public feeds rather
+than inventing feeds or scraping arbitrary apps for people who never
+published the standard.
+
+## Metadata is not endorsement
+
+Reader pills should be understood as compact facts, usually supplied by the
+creator. `web`, `cli`, and `claude-skill` are targets. `vibe_coded`,
+`forkable`, `source`, `prompt_log`, and `replaces` are claims or provenance
+links. A reader can display those facts without blessing them. Trust layers
+can sit on top later.
 
 ## First 10 adopter archetypes
 
@@ -142,9 +148,9 @@ A path from zero to network effect:
 2. **Five friends mirror each other's feeds in their footers.** Friction:
    one anchor tag. Reward: cross-promotion that doesn't require a
    shared platform.
-3. **Someone builds the first reader at apps-json.org.** Friction:
-   weekend project. Reward: instant URL to share whenever they show off
-   what they make. *(Done — apps-json.vercel.app, weekend of 2026-04-30.)*
+3. **Someone builds a reader at apps-json.org.** Friction: fetch, validate,
+   render. Reward: instant URL to share whenever someone wants to show the
+   set of things they make. *(The first preview lives at apps-json.vercel.app.)*
 4. **A vibe-coding platform exposes per-user feeds.** Friction: one
    server-side endpoint. Reward: every published user becomes a
    publisher of structured metadata, which platforms have wanted but

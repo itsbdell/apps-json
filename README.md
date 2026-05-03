@@ -19,6 +19,8 @@ index them, or build readers on top.
 | [`appfeed/`](appfeed/) | Reference CLI. Publishes as `@apps-json/cli`. |
 | [`site/`](site/) | The web reader, seeded directory, digest, badge generator, and shared validator. |
 | [`docs/ECOSYSTEM.md`](docs/ECOSYSTEM.md) | Map of readers, discovery, adopters. |
+| [`docs/PUBLISHING.md`](docs/PUBLISHING.md) | How to publish and keep a feed fresh. |
+| [`skills/apps-json-publisher/`](skills/apps-json-publisher/) | Small Codex/Claude skill for maintaining a feed. |
 
 ## The Tiny Version
 
@@ -78,6 +80,9 @@ certification from this repo.
 ```bash
 # try the CLI without installing
 npx @apps-json/cli validate <url-or-path>
+
+# add a new app to a local feed
+npx @apps-json/cli add ./apps.json --name "Tiny Tool" --url "https://example.com/tiny"
 
 # try the reader
 open https://apps-json.vercel.app/?feed=<url-of-your-apps.json>

@@ -25,14 +25,25 @@ jobs:
       - run: npm test
 
   site-validator:
-    name: site validator tests
+    name: site tests
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
         with:
           node-version: 20
-      - run: node --test site/validator.test.js
+      - run: node --test site/validator.test.js site/trust.test.js site/url-utils.test.js site/directory.test.js site/digest.test.js
+
+  seed-data:
+    name: generated seed data in sync
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+      - run: node --test scripts/build-seed-data.test.js
+      - run: node scripts/build-seed-data.js --check
 
   schema:
     name: schema validates example

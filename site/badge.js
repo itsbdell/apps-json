@@ -3,9 +3,9 @@
 // the feed (best effort), and emits paste-ready snippets in three forms:
 // live-link HTML, static-SVG-only HTML, and Markdown.
 
-import { validate } from "/validator.js";
-import { safeWebUrl } from "/render.js";
-import { normalizeFeedUrl } from "/url-utils.js";
+import { validate } from "/validator.js?v=20260502-8";
+import { safeWebUrl } from "/render.js?v=20260502-8";
+import { normalizeFeedUrl } from "/url-utils.js?v=20260502-8";
 
 const READER_ORIGIN = location.origin;
 const BADGE_PATH = "/badge.svg";

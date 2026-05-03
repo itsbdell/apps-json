@@ -1,7 +1,7 @@
 {
   "name": "@apps-json/cli",
   "version": "0.1.0",
-  "description": "Reference CLI for the apps.json standard. Validate apps.json feeds against the v1.0 schema. Installs the 'appfeed' binary.",
+  "description": "Reference CLI for the apps.json standard. Validate and maintain apps.json feeds. Installs the 'appfeed' binary.",
   "homepage": "https://apps-json.org",
   "repository": {
     "type": "git",

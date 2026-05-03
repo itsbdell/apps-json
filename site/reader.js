@@ -3,9 +3,9 @@
 // directory placeholder, fetch the feed, validate it, and render the
 // profile (or actionable errors) into #reader-output.
 
-import { validate } from "/validator.js";
-import { renderProfile, renderError, renderSchemaErrors, safeWebUrl } from "/render.js";
-import { normalizeFeedUrl, wellKnownFallback } from "/url-utils.js";
+import { validate } from "/validator.js?v=20260502-8";
+import { renderProfile, renderError, renderSchemaErrors, safeWebUrl } from "/render.js?v=20260502-8";
+import { normalizeFeedUrl, wellKnownFallback } from "/url-utils.js?v=20260502-8";
 
 const FETCH_TIMEOUT_MS = 15000;
 

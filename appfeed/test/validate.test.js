@@ -1,8 +1,7 @@
-import { test, before, after } from "node:test";
+import { test } from "node:test";
 import assert from "node:assert/strict";
 import { execFile } from "node:child_process";
 import { promisify } from "node:util";
-import { writeFile, mkdir, rm } from "node:fs/promises";
 import { fileURLToPath } from "node:url";
 import { dirname, join } from "node:path";
 import { createServer } from "node:http";
@@ -22,38 +21,21 @@ async function run(args) {
   }
 }
 
-before(async () => {
-  await mkdir(FIXTURES, { recursive: true });
-  await writeFile(
-    join(FIXTURES, "valid-minimal.json"),
-    JSON.stringify({ version: "1.0", apps: [{ name: "Hi", url: "https://example.com" }] })
-  );
-  await writeFile(
-    join(FIXTURES, "missing-version.json"),
-    JSON.stringify({ apps: [] })
-  );
-  await writeFile(
-    join(FIXTURES, "missing-app-url.json"),
-    JSON.stringify({ version: "1.0", apps: [{ name: "Bad" }] })
-  );
-  await writeFile(
-    join(FIXTURES, "extra-fields.json"),
-    JSON.stringify({
-      version: "1.0",
-      custom_field: "should be allowed",
-      apps: [{ name: "X", url: "https://example.com", "x-foo": 42 }]
-    })
-  );
-  await writeFile(
-    join(FIXTURES, "empty-apps.json"),
-    JSON.stringify({ version: "1.0", apps: [] })
-  );
-  await writeFile(join(FIXTURES, "broken.json"), "{ not json");
-});
-
-after(async () => {
-  await rm(FIXTURES, { recursive: true, force: true });
-});
+async function listenOrSkip(t, server) {
+  try {
+    await new Promise((resolve, reject) => {
+      server.once("error", reject);
+      server.listen(0, "127.0.0.1", resolve);
+    });
+  } catch (e) {
+    if (e?.code === "EPERM") {
+      t.skip("local sandbox does not allow binding an HTTP server");
+      return false;
+    }
+    throw e;
+  }
+  return true;
+}
 
 test("happy path: example feed validates clean", async () => {
   const { code, stdout } = await run(["validate", EXAMPLE]);
@@ -125,7 +107,7 @@ test("error path: --json on schema failure emits parseable JSON", async () => {
   assert.ok(parsed.errors.length > 0);
 });
 
-test("integration: validates a feed served over HTTP", async () => {
+test("integration: validates a feed served over HTTP", async (t) => {
   const server = createServer((req, res) => {
     if (req.url === "/apps.json") {
       res.writeHead(200, { "Content-Type": "application/json" });
@@ -138,7 +120,7 @@ test("integration: validates a feed served over HTTP", async () => {
       res.end();
     }
   });
-  await new Promise(resolve => server.listen(0, resolve));
+  if (!await listenOrSkip(t, server)) return;
   const { port } = server.address();
   try {
     const { code, stdout } = await run(["validate", `http://127.0.0.1:${port}/apps.json`]);
@@ -149,12 +131,80 @@ test("integration: validates a feed served over HTTP", async () => {
   }
 });
 
-test("error path: HTTP 404 exits 2", async () => {
+test("publisher: add creates a valid apps.json file", async () => {
+  const tmp = join(FIXTURES, "tmp-add.json");
+  const { code, stdout } = await run([
+    "add",
+    tmp,
+    "--name", "Tiny Tool",
+    "--url", "https://example.com/tiny",
+    "--description", "A small useful app.",
+    "--tags", "utility,ai",
+    "--target", "web|https://example.com/tiny|Open",
+    "--vibe-coded", "true",
+    "--forkable", "true",
+    "--source", "https://github.com/example/tiny",
+    "--updated", "2026-05-03T12:00:00.000Z",
+    "--feed-updated", "2026-05-03T12:00:00.000Z"
+  ]);
+
+  assert.equal(code, 0);
+  assert.match(stdout, /Added Tiny Tool/);
+
+  const { readFile, unlink } = await import("node:fs/promises");
+  try {
+    const feed = JSON.parse(await readFile(tmp, "utf8"));
+    assert.equal(feed.version, "1.0");
+    assert.equal(feed.apps.length, 1);
+    assert.equal(feed.apps[0].id, "tiny-tool");
+    assert.deepEqual(feed.apps[0].tags, ["utility", "ai"]);
+    assert.deepEqual(feed.apps[0].targets, [{ kind: "web", url: "https://example.com/tiny", label: "Open" }]);
+    assert.equal(feed.apps[0].vibe_coded, true);
+    assert.equal(feed.apps[0].forkable, true);
+  } finally {
+    await unlink(tmp).catch(() => {});
+  }
+});
+
+test("publisher: add refuses duplicates unless --replace is passed", async () => {
+  const tmp = join(FIXTURES, "tmp-duplicate.json");
+  const { writeFile, unlink } = await import("node:fs/promises");
+  await writeFile(tmp, JSON.stringify({
+    version: "1.0",
+    apps: [{ id: "tiny", name: "Tiny", url: "https://example.com/tiny" }]
+  }));
+
+  try {
+    const duplicate = await run([
+      "add",
+      tmp,
+      "--id", "tiny",
+      "--name", "Tiny",
+      "--url", "https://example.com/tiny"
+    ]);
+    assert.equal(duplicate.code, 64);
+    assert.match(duplicate.stderr, /already exists/);
+
+    const replaced = await run([
+      "add",
+      tmp,
+      "--id", "tiny",
+      "--name", "Tiny v2",
+      "--url", "https://example.com/tiny",
+      "--replace"
+    ]);
+    assert.equal(replaced.code, 0);
+  } finally {
+    await unlink(tmp).catch(() => {});
+  }
+});
+
+test("error path: HTTP 404 exits 2", async (t) => {
   const server = createServer((_req, res) => {
     res.writeHead(404);
     res.end("not found");
   });
-  await new Promise(resolve => server.listen(0, resolve));
+  if (!await listenOrSkip(t, server)) return;
   const { port } = server.address();
   try {
     const { code, stderr } = await run(["validate", `http://127.0.0.1:${port}/missing.json`]);

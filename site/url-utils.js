@@ -3,14 +3,31 @@
 // no DOM access.
 
 // Normalize a feed URL the user typed (or pasted into ?feed=). Accepts:
+//   - "/apps.example.json"      -> "<current-origin>/apps.example.json"
+//   - "apps.example.json"       -> "<current-origin>/apps.example.json"
 //   - "ada.example"             -> "https://ada.example/apps.json"
 //   - "https://ada.example"     -> "https://ada.example/apps.json"
 //   - "https://ada.example/apps.json"  -> unchanged
 //   - "https://ada.example/feeds/apps.json"  -> unchanged (custom path preserved)
 // Returns null when the input cannot be coerced into a valid http(s) URL.
-export function normalizeFeedUrl(raw) {
+export function normalizeFeedUrl(raw, baseUrl = globalThis.location?.origin) {
   let s = (raw || "").trim();
   if (!s) return null;
+  if (s.startsWith("//")) return null;
+  if (s.startsWith("/") && !s.startsWith("//")) {
+    try {
+      return new URL(s, baseUrl).toString();
+    } catch {
+      return null;
+    }
+  }
+  if (/^[A-Za-z0-9._-]+\.json(?:[?#].*)?$/.test(s)) {
+    try {
+      return new URL(`/${s}`, baseUrl).toString();
+    } catch {
+      return null;
+    }
+  }
   if (!/^https?:\/\//i.test(s)) {
     s = "https://" + s.replace(/^\/+/, "");
   }
