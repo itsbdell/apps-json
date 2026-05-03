@@ -6,3 +6,11 @@ dist/
 .env.local
 .vercel/
 .context/
+
+# Private project planning and working notes live outside this public repo.
+STRATEGY.md
+tasks/
+docs/plans/
+docs/brainstorms/
+docs/ideation/
+docs/blog/
