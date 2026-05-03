@@ -18,7 +18,7 @@ package publishes as **`@apps-json/cli`** and installs the binary as
 
 ```bash
 # zero-install
-npx @apps-json/cli validate https://briandell.xyz/apps.json
+npx @apps-json/cli validate https://ada.example/apps.json
 
 # global install
 npm install -g @apps-json/cli
@@ -35,7 +35,7 @@ Fetches (or reads from disk) and validates an `apps.json` against the
 v1.0 JSON Schema.
 
 ```
-$ appfeed validate https://briandell.xyz/apps.json
+$ appfeed validate https://ada.example/apps.json
 ✓ apps.json v1.0 — valid
   3 apps
 
