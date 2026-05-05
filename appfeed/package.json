@@ -1,0 +1,42 @@
+{
+  "name": "@apps-json/cli",
+  "version": "0.1.0",
+  "description": "Reference CLI for the apps.json standard. Validate and maintain apps.json feeds. Installs the 'appfeed' binary.",
+  "homepage": "https://apps-json.org",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/itsbdell/apps-json.git",
+    "directory": "appfeed"
+  },
+  "license": "MIT",
+  "type": "module",
+  "engines": {
+    "node": ">=20"
+  },
+  "bin": {
+    "appfeed": "bin/appfeed.js"
+  },
+  "files": [
+    "bin/",
+    "src/",
+    "README.md"
+  ],
+  "scripts": {
+    "sync-schemas": "node ../scripts/sync-schemas.js",
+    "prepublishOnly": "npm run sync-schemas",
+    "test": "node --test test/"
+  },
+  "keywords": [
+    "apps.json",
+    "feed",
+    "validator",
+    "vibe-coded",
+    "cli"
+  ],
+  "dependencies": {
+    "ajv": "^8.17.1",
+    "ajv-formats": "^3.0.1",
+    "commander": "^12.1.0",
+    "picocolors": "^1.1.1"
+  }
+}
