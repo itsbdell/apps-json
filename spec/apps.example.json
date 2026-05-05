@@ -1,0 +1,55 @@
+{
+  "version": "1.0",
+  "self": "https://ada.example/apps.json",
+  "updated": "2026-04-30T12:00:00Z",
+  "author": {
+    "name": "Ada Lovelace",
+    "url": "https://ada.example",
+    "social": [
+      { "platform": "github", "url": "https://github.com/ada-example", "handle": "ada-example" },
+      { "platform": "mastodon", "url": "https://mastodon.example/@ada", "handle": "@ada" }
+    ]
+  },
+  "apps": [
+    {
+      "id": "notebook",
+      "name": "Notebook",
+      "description": "Personal notes app with AI synthesis.",
+      "url": "https://notebook.ada.example",
+      "version": "0.4.2",
+      "updated": "2026-04-22T09:14:00Z",
+      "tags": ["bookmarks", "vault", "ai"],
+      "vibe_coded": true,
+      "prompt_log": "https://ada.example/notebook/prompts",
+      "forkable": true,
+      "source": "https://github.com/ada-example/notebook",
+      "targets": [
+        { "kind": "web", "url": "https://notebook.ada.example", "label": "Open in browser" },
+        { "kind": "macos", "url": "https://ada.example/notebook/Notebook.dmg", "label": "Install on Mac" }
+      ]
+    },
+    {
+      "id": "outreach",
+      "name": "Outreach",
+      "description": "Topic-driven networking pipeline as a Claude skill.",
+      "url": "https://ada.example/skills/outreach",
+      "vibe_coded": true,
+      "targets": [
+        {
+          "kind": "claude-skill",
+          "url": "https://ada.example/skills/outreach.zip",
+          "label": "Install in Claude Code"
+        }
+      ]
+    },
+    {
+      "id": "phrase-chain-fork",
+      "name": "Phrase Chain — Spanish edition",
+      "description": "Fork of phrase-chain retrained on Spanish corpora.",
+      "url": "https://ada.example/phrase-chain-es",
+      "vibe_coded": true,
+      "forkable": true,
+      "replaces": "app://someone-else.com/phrase-chain"
+    }
+  ]
+}

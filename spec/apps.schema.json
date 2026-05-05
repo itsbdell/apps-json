@@ -1,0 +1,192 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://apps-json.org/schemas/v1.json",
+  "title": "apps.json",
+  "description": "A decentralized feed of apps published at /apps.json on a domain. Spec v1.0.",
+  "type": "object",
+  "required": ["version", "apps"],
+  "additionalProperties": true,
+  "properties": {
+    "version": {
+      "description": "Spec version this file conforms to.",
+      "type": "string",
+      "const": "1.0"
+    },
+    "self": {
+      "description": "Canonical URL of this apps.json. Lets aggregators detect mirrors and follow renames.",
+      "type": "string",
+      "format": "uri"
+    },
+    "updated": {
+      "description": "Feed-level last-modified time, ISO 8601.",
+      "type": "string",
+      "format": "date-time"
+    },
+    "author": {
+      "$ref": "#/$defs/author",
+      "description": "Default author applied to apps that don't override it."
+    },
+    "apps": {
+      "description": "The apps published in this feed. May be empty.",
+      "type": "array",
+      "items": { "$ref": "#/$defs/app" }
+    }
+  },
+  "$defs": {
+    "app": {
+      "type": "object",
+      "required": ["name", "url"],
+      "additionalProperties": true,
+      "properties": {
+        "id": {
+          "description": "Stable identifier across renames. Unique within this file. Lowercase URL-safe slug recommended. Aggregators fall back to url when absent.",
+          "type": "string",
+          "pattern": "^[a-z0-9][a-z0-9._-]{0,127}$"
+        },
+        "name": {
+          "type": "string",
+          "minLength": 1
+        },
+        "description": { "type": "string" },
+        "url": {
+          "description": "Primary launch surface. Typically a web URL, but may point to any installable target.",
+          "type": "string",
+          "format": "uri"
+        },
+        "version": {
+          "type": "string",
+          "description": "App's own version string. Free-form; semver recommended."
+        },
+        "updated": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "screenshot": {
+          "type": "string",
+          "format": "uri"
+        },
+        "icon": {
+          "type": "string",
+          "format": "uri"
+        },
+        "tags": {
+          "type": "array",
+          "items": { "type": "string" }
+        },
+        "targets": {
+          "description": "Other ways to install or launch this app. Readers MUST ignore unknown 'kind' values without erroring.",
+          "type": "array",
+          "items": { "$ref": "#/$defs/target" }
+        },
+        "author": {
+          "$ref": "#/$defs/author"
+        },
+        "vibe_coded": {
+          "type": "boolean",
+          "description": "Self-attestation that this app was primarily AI-assisted."
+        },
+        "prompt_log": {
+          "type": "string",
+          "format": "uri",
+          "description": "Public prompt log or transcript URL (e.g., a Claude share link, a gist, a GitHub repo path)."
+        },
+        "forkable": {
+          "type": "boolean",
+          "description": "Author invites forks. SHOULD imply 'source' is published."
+        },
+        "source": {
+          "type": "string",
+          "format": "uri",
+          "description": "URL to the source repository or canonical source location."
+        },
+        "replaces": {
+          "type": "string",
+          "format": "uri",
+          "description": "URI of the upstream app this forks. Either a regular https URL or an app:// URI of the form app://<host>/<id>."
+        }
+      }
+    },
+    "target": {
+      "type": "object",
+      "required": ["kind"],
+      "additionalProperties": true,
+      "properties": {
+        "kind": {
+          "description": "Platform target. The list below is a hint, not a closed enum — readers MUST tolerate unknown kinds.",
+          "type": "string",
+          "examples": [
+            "web",
+            "claude-skill",
+            "claude-app",
+            "mcp-server",
+            "cli",
+            "macos",
+            "windows",
+            "linux",
+            "ios",
+            "android",
+            "vscode",
+            "browser-extension",
+            "iframe",
+            "prompt"
+          ]
+        },
+        "url": {
+          "type": "string",
+          "format": "uri",
+          "description": "Where to install or launch."
+        },
+        "command": {
+          "type": "string",
+          "description": "For 'cli' or 'prompt' kinds: the literal command line or prompt body."
+        },
+        "label": {
+          "type": "string",
+          "description": "Human-readable label, e.g., 'Install on Mac' or 'Open in Claude Code'."
+        },
+        "checksum": {
+          "type": "string",
+          "description": "Optional integrity hash for downloadable targets. Recommended for binaries."
+        }
+      }
+    },
+    "author": {
+      "type": "object",
+      "additionalProperties": true,
+      "properties": {
+        "name": { "type": "string" },
+        "url": {
+          "type": "string",
+          "format": "uri",
+          "description": "Author home page. Used as the verification anchor — social profiles SHOULD link back here."
+        },
+        "email": {
+          "type": "string",
+          "format": "email"
+        },
+        "social": {
+          "type": "array",
+          "description": "Verified social handles. A verifying agent fetches each entry's URL and looks for a backlink to author.url or to the apps.json's host. Verification is the agent's responsibility, not the file's.",
+          "items": {
+            "type": "object",
+            "required": ["url"],
+            "additionalProperties": true,
+            "properties": {
+              "platform": {
+                "type": "string",
+                "description": "Hint label: 'twitter', 'github', 'mastodon', 'bluesky', 'linkedin', 'youtube', etc."
+              },
+              "url": {
+                "type": "string",
+                "format": "uri"
+              },
+              "handle": {
+                "type": "string"
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
