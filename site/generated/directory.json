@@ -1,0 +1,376 @@
+{
+  "version": "1.0",
+  "generated_at": "2026-05-02T00:00:00.000Z",
+  "source": "site/seeds.json",
+  "feeds": [
+    {
+      "id": "ada-example",
+      "feed_url": "https://ada.example/apps.json",
+      "demo": true,
+      "permission": "fictional-example",
+      "curator_note": "Fictional demo feed used to show the apps.json directory and digest surfaces.",
+      "curator_tags": [
+        "demo",
+        "ai",
+        "tools"
+      ],
+      "checked_at": "2026-05-02T00:00:00.000Z",
+      "status": "valid",
+      "load_error": null,
+      "validation": {
+        "ok": true,
+        "errors": [],
+        "warnings": []
+      },
+      "feed_updated": "2026-04-30T12:00:00.000Z",
+      "author": {
+        "name": "Ada Lovelace",
+        "url": "https://ada.example/",
+        "social": [
+          {
+            "platform": "github",
+            "url": "https://github.com/ada-example",
+            "handle": "ada-example"
+          },
+          {
+            "platform": "mastodon",
+            "url": "https://mastodon.example/@ada",
+            "handle": "@ada@mastodon.example"
+          }
+        ]
+      },
+      "app_count": 3,
+      "trust": {
+        "summary": {
+          "present": 4,
+          "valid": 4,
+          "invalid": 0,
+          "verified": 0,
+          "unverified": 0,
+          "not_checked": 1,
+          "missing": 3
+        },
+        "claims": [
+          {
+            "label": "feed",
+            "state": "present",
+            "value": "https://ada.example/apps.json",
+            "url": "https://ada.example/apps.json",
+            "urlState": "valid"
+          },
+          {
+            "label": "author",
+            "state": "present",
+            "value": "https://ada.example",
+            "url": "https://ada.example/",
+            "urlState": "valid"
+          },
+          {
+            "label": "source",
+            "state": "missing"
+          },
+          {
+            "label": "prompt log",
+            "state": "missing"
+          },
+          {
+            "label": "replaces",
+            "state": "missing"
+          },
+          {
+            "label": "social: github",
+            "state": "present",
+            "value": "https://github.com/ada-example",
+            "url": "https://github.com/ada-example",
+            "urlState": "valid"
+          },
+          {
+            "label": "social: mastodon",
+            "state": "present",
+            "value": "https://mastodon.example/@ada",
+            "url": "https://mastodon.example/@ada",
+            "urlState": "valid"
+          }
+        ],
+        "checks": [
+          {
+            "label": "social backlink",
+            "state": "not_checked",
+            "detail": "Backlink verification was not run for this item."
+          }
+        ]
+      },
+      "trust_summary": "claims present",
+      "apps": [
+        {
+          "id": "ada-example:notebook",
+          "feed_id": "ada-example",
+          "feed_url": "https://ada.example/apps.json",
+          "name": "Notebook",
+          "description": "A web-based notebook for jotting and threading ideas.",
+          "url": "https://notebook.ada.example",
+          "version": "0.4.2",
+          "updated": "2026-04-22T09:14:00.000Z",
+          "tags": [
+            "notes",
+            "writing",
+            "ai"
+          ],
+          "targets": [
+            {
+              "kind": "web",
+              "url": "https://notebook.ada.example",
+              "label": "Open in browser"
+            }
+          ],
+          "vibe_coded": true,
+          "forkable": true,
+          "source": "https://github.com/ada-example/notebook",
+          "prompt_log": null,
+          "replaces": null,
+          "trust": {
+            "summary": {
+              "present": 6,
+              "valid": 5,
+              "invalid": 0,
+              "verified": 0,
+              "unverified": 0,
+              "not_checked": 1,
+              "missing": 2
+            },
+            "claims": [
+              {
+                "label": "feed",
+                "state": "present",
+                "value": "https://ada.example/apps.json",
+                "url": "https://ada.example/apps.json",
+                "urlState": "valid"
+              },
+              {
+                "label": "author",
+                "state": "present",
+                "value": "https://ada.example",
+                "url": "https://ada.example/",
+                "urlState": "valid"
+              },
+              {
+                "label": "source",
+                "state": "present",
+                "value": "https://github.com/ada-example/notebook",
+                "url": "https://github.com/ada-example/notebook",
+                "urlState": "valid"
+              },
+              {
+                "label": "prompt log",
+                "state": "missing"
+              },
+              {
+                "label": "replaces",
+                "state": "missing"
+              },
+              {
+                "label": "social: github",
+                "state": "present",
+                "value": "https://github.com/ada-example",
+                "url": "https://github.com/ada-example",
+                "urlState": "valid"
+              },
+              {
+                "label": "social: mastodon",
+                "state": "present",
+                "value": "https://mastodon.example/@ada",
+                "url": "https://mastodon.example/@ada",
+                "urlState": "valid"
+              },
+              {
+                "label": "forkable",
+                "state": "present",
+                "value": true
+              }
+            ],
+            "checks": [
+              {
+                "label": "social backlink",
+                "state": "not_checked",
+                "detail": "Backlink verification was not run for this item."
+              }
+            ]
+          },
+          "trust_summary": "claims present",
+          "reader_url": "/?feed=%2Fapps.example.json"
+        },
+        {
+          "id": "ada-example:outreach",
+          "feed_id": "ada-example",
+          "feed_url": "https://ada.example/apps.json",
+          "name": "Outreach",
+          "description": "Topic-driven networking pipeline as a Claude skill.",
+          "url": "https://ada.example/skills/outreach",
+          "version": null,
+          "updated": "2026-04-30T12:00:00.000Z",
+          "tags": [],
+          "targets": [
+            {
+              "kind": "claude-skill",
+              "url": "https://ada.example/skills/outreach.zip",
+              "label": "Install Claude skill"
+            }
+          ],
+          "vibe_coded": true,
+          "forkable": false,
+          "source": null,
+          "prompt_log": null,
+          "replaces": null,
+          "trust": {
+            "summary": {
+              "present": 4,
+              "valid": 4,
+              "invalid": 0,
+              "verified": 0,
+              "unverified": 0,
+              "not_checked": 1,
+              "missing": 3
+            },
+            "claims": [
+              {
+                "label": "feed",
+                "state": "present",
+                "value": "https://ada.example/apps.json",
+                "url": "https://ada.example/apps.json",
+                "urlState": "valid"
+              },
+              {
+                "label": "author",
+                "state": "present",
+                "value": "https://ada.example",
+                "url": "https://ada.example/",
+                "urlState": "valid"
+              },
+              {
+                "label": "source",
+                "state": "missing"
+              },
+              {
+                "label": "prompt log",
+                "state": "missing"
+              },
+              {
+                "label": "replaces",
+                "state": "missing"
+              },
+              {
+                "label": "social: github",
+                "state": "present",
+                "value": "https://github.com/ada-example",
+                "url": "https://github.com/ada-example",
+                "urlState": "valid"
+              },
+              {
+                "label": "social: mastodon",
+                "state": "present",
+                "value": "https://mastodon.example/@ada",
+                "url": "https://mastodon.example/@ada",
+                "urlState": "valid"
+              }
+            ],
+            "checks": [
+              {
+                "label": "social backlink",
+                "state": "not_checked",
+                "detail": "Backlink verification was not run for this item."
+              }
+            ]
+          },
+          "trust_summary": "claims present",
+          "reader_url": "/?feed=%2Fapps.example.json"
+        },
+        {
+          "id": "ada-example:phrase-chain-fork",
+          "feed_id": "ada-example",
+          "feed_url": "https://ada.example/apps.json",
+          "name": "Phrase Chain — Spanish edition",
+          "description": "Fork of phrase-chain retrained on Spanish corpora.",
+          "url": "https://ada.example/phrase-chain-es",
+          "version": null,
+          "updated": "2026-04-30T12:00:00.000Z",
+          "tags": [],
+          "targets": [],
+          "vibe_coded": true,
+          "forkable": true,
+          "source": null,
+          "prompt_log": null,
+          "replaces": "app://upstream.example/phrase-chain",
+          "trust": {
+            "summary": {
+              "present": 6,
+              "valid": 4,
+              "invalid": 0,
+              "verified": 0,
+              "unverified": 0,
+              "not_checked": 2,
+              "missing": 2
+            },
+            "claims": [
+              {
+                "label": "feed",
+                "state": "present",
+                "value": "https://ada.example/apps.json",
+                "url": "https://ada.example/apps.json",
+                "urlState": "valid"
+              },
+              {
+                "label": "author",
+                "state": "present",
+                "value": "https://ada.example",
+                "url": "https://ada.example/",
+                "urlState": "valid"
+              },
+              {
+                "label": "source",
+                "state": "missing"
+              },
+              {
+                "label": "prompt log",
+                "state": "missing"
+              },
+              {
+                "label": "replaces",
+                "state": "present",
+                "value": "app://upstream.example/phrase-chain",
+                "urlState": "not_checked"
+              },
+              {
+                "label": "social: github",
+                "state": "present",
+                "value": "https://github.com/ada-example",
+                "url": "https://github.com/ada-example",
+                "urlState": "valid"
+              },
+              {
+                "label": "social: mastodon",
+                "state": "present",
+                "value": "https://mastodon.example/@ada",
+                "url": "https://mastodon.example/@ada",
+                "urlState": "valid"
+              },
+              {
+                "label": "forkable",
+                "state": "present",
+                "value": true
+              }
+            ],
+            "checks": [
+              {
+                "label": "social backlink",
+                "state": "not_checked",
+                "detail": "Backlink verification was not run for this item."
+              }
+            ]
+          },
+          "trust_summary": "claims present",
+          "reader_url": "/?feed=%2Fapps.example.json"
+        }
+      ]
+    }
+  ]
+}
