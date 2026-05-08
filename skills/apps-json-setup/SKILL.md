@@ -177,3 +177,4 @@ Finish with:
 - candidates omitted for now and why,
 - validation result,
 - suggested next publish step.
+

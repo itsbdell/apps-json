@@ -61,3 +61,4 @@ appfeed add ./apps.json \
 ```
 
 Use `--replace` when updating an existing entry with the same `id` or `url`.
+

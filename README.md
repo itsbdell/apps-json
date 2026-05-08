@@ -111,6 +111,7 @@ The seed list does not invent feeds for real creators.
 | [`site/`](site/) | Example web reader, seeded directory, digest, badge generator, and shared validator. |
 | [`docs/ECOSYSTEM.md`](docs/ECOSYSTEM.md) | Map of readers, discovery, adopters. |
 | [`docs/PUBLISHING.md`](docs/PUBLISHING.md) | How to publish and keep a feed fresh. |
+| [`site/apps.json`](site/apps.json) | This project's own public feed, published at `https://apps-json.org/apps.json`. |
 | [`skills/apps-json-setup/`](skills/apps-json-setup/) | Codex/Claude skill for finding apps, skills, CLIs, MCP servers, and other software across repos, then drafting a feed. |
 | [`skills/apps-json-publisher/`](skills/apps-json-publisher/) | Small Codex/Claude skill for maintaining a feed. |
 
@@ -137,6 +138,7 @@ For agent-assisted setup or maintenance, point the agent at
 and ask it to use `apps-json-setup` or `apps-json-publisher`.
 
 Live site: [apps-json.org](https://apps-json.org).
+Project feed: [apps-json.org/apps.json](https://apps-json.org/apps.json).
 
 ## Development
 
