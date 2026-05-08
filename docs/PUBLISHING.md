@@ -109,3 +109,9 @@ Agents should treat `apps.json` as a project artifact:
    `source`, `prompt_log`, and `replaces`.
 4. Run validation.
 5. Include the feed update in the same commit as the app change when practical.
+
+For agent-assisted setup or maintenance, point the agent at
+[`apps-json-agent-skills`](https://github.com/itsbdell/apps-json-agent-skills)
+and ask it to use `apps-json-setup` or `apps-json-publisher`. That standalone
+repo is the canonical agent-facing distribution copy of the skills; this repo
+keeps reference mirrors.

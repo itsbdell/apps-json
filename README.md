@@ -114,6 +114,11 @@ The seed list does not invent feeds for real creators.
 | [`skills/apps-json-setup/`](skills/apps-json-setup/) | Codex/Claude skill for finding apps, skills, CLIs, MCP servers, and other software across repos, then drafting a feed. |
 | [`skills/apps-json-publisher/`](skills/apps-json-publisher/) | Small Codex/Claude skill for maintaining a feed. |
 
+The skills are mirrored here for reference. The canonical agent-facing copies
+live in
+[`apps-json-agent-skills`](https://github.com/itsbdell/apps-json-agent-skills),
+a smaller repo you can point agents at directly.
+
 ## Try It
 
 ```bash
@@ -126,6 +131,10 @@ npx @apps-json/cli add ./apps.json --name "Tiny Tool" --url "https://example.com
 # try the reader
 open https://apps-json.org/?feed=<url-of-your-apps.json>
 ```
+
+For agent-assisted setup or maintenance, point the agent at
+[`apps-json-agent-skills`](https://github.com/itsbdell/apps-json-agent-skills)
+and ask it to use `apps-json-setup` or `apps-json-publisher`.
 
 Live site: [apps-json.org](https://apps-json.org).
 

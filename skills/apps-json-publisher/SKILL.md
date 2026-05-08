@@ -9,8 +9,8 @@ description: >
 # apps.json Publisher
 
 Use this skill when a user asks to publish, update, maintain, or validate an
-`apps.json` feed, or when a project change ships new creator-made software
-that should appear in the feed, including apps, Claude/Codex skills, CLIs, MCP
+`apps.json` feed, or when a project change ships new creator-made software that
+should appear in the feed, including apps, Claude/Codex skills, CLIs, MCP
 servers, extensions, templates, or other installable/useful software.
 
 ## Workflow
@@ -25,8 +25,8 @@ servers, extensions, templates, or other installable/useful software.
    - Required: `name`, `url`.
    - Prefer a stable lowercase `id`.
    - Include `description`, `tags`, `targets`, `source`, `prompt_log`,
-     `replaces`, `vibe_coded`, and `forkable` when the project has evidence
-     for them.
+     `replaces`, `vibe_coded`, and `forkable` when the project has evidence for
+     them.
    - Treat `vibe_coded`, `forkable`, `source`, `prompt_log`, and `replaces` as
      creator-declared metadata, not endorsements.
 
@@ -37,7 +37,8 @@ servers, extensions, templates, or other installable/useful software.
 
 4. Validate.
    - Run `npx @apps-json/cli validate ./apps.json` when available.
-   - If working inside this repo, run `node appfeed/bin/appfeed.js validate ./apps.json`.
+   - If working inside the main `apps-json` repo, run `node appfeed/bin/appfeed.js
+     validate ./apps.json`.
    - Fix schema errors before finishing.
 
 5. Report what changed.
