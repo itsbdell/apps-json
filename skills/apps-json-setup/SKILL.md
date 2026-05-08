@@ -9,9 +9,11 @@ description: >
 
 # apps.json Setup
 
-Use this skill when a user asks to create an initial `apps.json`, populate a
-feed from their repos, inventory their apps, or find creator-made software that
-should be published in an app feed.
+Use this skill when a user asks to create an initial `apps.json`, run a
+first-pass inventory across a workspace, populate a feed from their repos, or
+find creator-made software that should be published in an app feed. If the user
+is maintaining an existing feed for a known shipped app, tool, or skill, use
+`apps-json-publisher` instead.
 
 Guiding posture: be comprehensive in discovery and enrichment, conservative in
 execution. Look broadly for creator-made software and capture the wider
@@ -63,7 +65,8 @@ rg --files \
    - Group files by git repo when possible with `git -C <dir> rev-parse
      --show-toplevel`.
    - Skip obvious dependency/cache directories: `node_modules`, `.next`,
-     `dist`, `build`, `.git`, `.venv`, `vendor`.
+     `dist`, `build`, `.git`, `.venv`, `vendor`, `.codex/plugins/cache`,
+     `.claude/plugins/cache`, and other installed marketplace/plugin caches.
    - In multi-root mode, write or update a review artifact such as
      `docs/app-feed-inventory.md` with:
      - scan roots,
@@ -87,6 +90,17 @@ rg --files \
        or `servers/` folders with reusable agent workflows.
      - plugin manifests such as `.codex-plugin/plugin.json`, MCP server config,
        package `bin` entries, or README install commands.
+   - Provenance gate for skills and agent workflows:
+     - Treat a Claude/Codex skill as includable only when there is evidence it is
+       authored by the scanned creator/workspace or intentionally published from
+       the scanned repo.
+     - Good evidence includes a repo-owned `skills/**/SKILL.md`, local plugin
+       manifest, README install instructions for this repo, package metadata, a
+       public source remote for the project, or explicit user confirmation.
+     - Installed marketplace downloads, plugin caches, vendored examples,
+       copied third-party skill packs, and unclear shared/internal automation
+       belong in `needs_confirmation` or `omit_for_now`, not directly in the
+       feed.
    - Weak signals: library-only package, notes-only repo, archived experiment,
      private automation.
    - When uncertain, list the candidate for user confirmation rather than
@@ -101,10 +115,12 @@ rg --files \
 4. Classify findings before drafting.
    - Use three buckets:
      - `include_in_candidate_json`: enough public evidence for at least `name`,
-       `url`, and a useful factual description.
+       `url`, a useful factual description, and creator/workspace ownership or
+       intentional publication.
      - `needs_confirmation`: likely app, tool, skill, CLI, MCP server,
        extension, or template, but missing canonical URL, ownership, current
-       status, install target, source URL, or description confidence.
+       status, install target, source URL, authorship/provenance evidence, or
+       description confidence.
      - `omit_for_now`: weak signal, private-looking, abandoned, duplicate,
        dependency-only, library-only, or not clearly software.
    - Do not throw away fuzzy findings. Preserve them in `needs_confirmation`
@@ -135,6 +151,11 @@ rg --files \
      claims, not proof.
    - If a useful optional field is plausible but not evidenced, omit it from
      JSON and list it as an enrichment question.
+   - For skill candidates, the entry should make the install/use surface clear:
+     prefer a repo, plugin, marketplace, or documented skill URL over a bare
+     local file path. If the only evidence is a local `SKILL.md`, keep the item
+     in `needs_confirmation` until the user confirms the intended public or
+     shareable target.
 
 6. Create or update the feed.
    - Prefer `./apps.json` unless the user requests a public output path such as
@@ -159,11 +180,14 @@ rg --files \
    - Ask before deleting entries.
 
 7. Validate and report.
-   - Run `npx @apps-json/cli validate ./apps.json` when available.
+   - Run `npx @apps-json/cli validate <feed-path>` when available.
    - If working inside the main `apps-json` repo, run `node appfeed/bin/appfeed.js
      validate <feed-path>`.
    - Report entries added, `needs_confirmation` candidates, `omit_for_now`
      skips, and evidence gaps.
+   - If the scan was meant to find Claude/Codex skills, confirm the report
+     includes any discovered skill candidates and distinguishes creator-owned
+     skills from installed/cache/vendor skills.
    - Remind the user that publishing requires serving the file publicly with
      browser-readable CORS headers when browser readers need to fetch it.
 
@@ -177,4 +201,3 @@ Finish with:
 - candidates omitted for now and why,
 - validation result,
 - suggested next publish step.
-

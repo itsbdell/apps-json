@@ -20,6 +20,8 @@ servers, extensions, templates, or other installable/useful software.
    - Also check site/public output paths such as `public/apps.json`,
      `static/apps.json`, or `site/apps.json`.
    - If no feed exists, create `apps.json` with `version: "1.0"` and `apps: []`.
+   - Use the resolved feed path as `<feed-path>` in every validation and CLI
+     command below.
 
 2. Identify the app entry.
    - Required: `name`, `url`.
@@ -29,6 +31,13 @@ servers, extensions, templates, or other installable/useful software.
      them.
    - Treat `vibe_coded`, `forkable`, `source`, `prompt_log`, and `replaces` as
      creator-declared metadata, not endorsements.
+   - For Claude/Codex skills, CLIs, MCP servers, templates, and other
+     installable artifacts, add or update the entry only when there is clear
+     evidence of creator/workspace ownership, canonical URL or source, intended
+     install/use target, and current status.
+   - Do not add downloaded marketplace/plugin-cache skills, vendored examples,
+     copied third-party tools, or unclear private automation directly to the
+     feed. Report a confirmation question instead.
 
 3. Update timestamps.
    - Set feed-level `updated` when the file changes.
@@ -36,9 +45,9 @@ servers, extensions, templates, or other installable/useful software.
    - Use ISO 8601 date-time strings.
 
 4. Validate.
-   - Run `npx @apps-json/cli validate ./apps.json` when available.
+   - Run `npx @apps-json/cli validate <feed-path>` when available.
    - If working inside the main `apps-json` repo, run `node appfeed/bin/appfeed.js
-     validate ./apps.json`.
+     validate <feed-path>`.
    - Fix schema errors before finishing.
 
 5. Report what changed.
@@ -52,7 +61,7 @@ servers, extensions, templates, or other installable/useful software.
 When the `appfeed` CLI is available, prefer:
 
 ```bash
-appfeed add ./apps.json \
+appfeed add <feed-path> \
   --name "App Name" \
   --url "https://example.com/app" \
   --description "One sentence." \
@@ -61,4 +70,3 @@ appfeed add ./apps.json \
 ```
 
 Use `--replace` when updating an existing entry with the same `id` or `url`.
-
